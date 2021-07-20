@@ -81,6 +81,23 @@ const getRepoInfo = async function (repoName) {
     }
 
     console.log(languages);
+    displayRepoInfo(repoInfo, languages);
+};
+
+displayRepoInfo = function (repoInfo, languages) {
+    repoDataSection.innerHTML = "";
+    const repoData = document.createElement("div");
+    repoData.innerHTML = `
+    <h3>Name: ${repoInfo.name}</h3>
+       <p>Description: ${repoInfo.description}</p>
+       <p>Default Branch: ${repoInfo.default_branch}</p>
+       <p>Languages: ${languages.join(", ")}</p>
+       <a class="visit" href="${repoInfo.html_url}" target="_blank" rel="noreferrer noopener">View Repo on GitHub!</a>
+    `;
+
+    repoDataSection.append(repoData);
+    repoDataSection.classList.remove("hide");
+    repoSection.classList.add("hide");
 };
 
 
