@@ -4,6 +4,8 @@ const profileInfo = document.querySelector(".overview");
 const username = "elizab-vd";
 //ul to display repos 
 const repoList = document.querySelector(".repo-list");
+const repoSection = document.querySelector(".repos");
+const repoDataSection = document.querySelector(".repo-data");
 
 const gitUserInfo = async function () {
     const res = await fetch (
@@ -52,3 +54,35 @@ const showRepos = function (repos) {
         repoList.append(repoItem);
     }  
 };
+
+repoList.addEventListener("click", function (e){
+    if(e.target.matches("h3")) {
+        const repoName = e.target.innerText;
+        getRepoInfo(repoName);
+    }
+});
+
+const getRepoInfo = async function (repoName) {
+    const fetchRepoInfo = await fetch (
+        `https://api.github.com/repos/${username}/${repoName}`
+    );
+
+    const repoInfo = await fetchRepoInfo.json();
+    console.log(repoInfo);
+
+    const fetchLanguages = await fetch (repoInfo.languages_url);
+
+    const languageData = await fetchLanguages.json();
+    //console.log(languageData);
+
+    const languages = [];
+    for(const language in languageData){
+        languages.push(language);
+    }
+
+    console.log(languages);
+};
+
+
+
+
