@@ -6,6 +6,8 @@ const username = "elizab-vd";
 const repoList = document.querySelector(".repo-list");
 const repoSection = document.querySelector(".repos");
 const repoDataSection = document.querySelector(".repo-data");
+const backToRepo = document.querySelector(".view-repos");
+const filterInput = document.querySelector(".filter-repos");
 
 const gitUserInfo = async function () {
     const res = await fetch (
@@ -48,6 +50,7 @@ const getRepos = async function () {
 
 const showRepos = function (repos) {
     for (const repo of repos) {
+        filterInput.classList.remove("hide");
         const repoItem = document.createElement("li");
         repoItem.classList.add("repo");
         repoItem.innerHTML = `<h3>${repo.name}</h3>`;
@@ -98,7 +101,14 @@ displayRepoInfo = function (repoInfo, languages) {
     repoDataSection.append(repoData);
     repoDataSection.classList.remove("hide");
     repoSection.classList.add("hide");
+    backToRepo.classList.remove("hide");
 };
+
+backToRepo.addEventListener("click", function () {
+    repoSection.classList.remove("hide");
+    userInfo.classList.add("hide");
+    backToRepo.classList.add("hide");
+});
 
 
 
