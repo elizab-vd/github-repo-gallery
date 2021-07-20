@@ -2,18 +2,21 @@
 const profileInfo = document.querySelector(".overview");
 //GitHub username
 const username = "elizab-vd";
-const gitHubInfo = async function () {
+//ul to display repos 
+const repoList = document.querySelector(".repo-list");
+
+const gitUserInfo = async function () {
     const res = await fetch (
         `https://api.github.com/users/${username}`
     );
     const userData = await res.json();
     console.log(userData);
-    showGitHubInfo(userData);
+    showGitUserInfo(userData);
 };
 
-gitHubInfo();
+gitUserInfo();
 
-const showGitHubInfo = function (userData) {
+const showGitUserInfo = function (userData) {
      const userInfo = document.createElement("div");
      userInfo.classList.add("user-info");
      userInfo.innerHTML = `
@@ -28,5 +31,24 @@ const showGitHubInfo = function (userData) {
    </div>
    `;
    profileInfo.append(userInfo);
+   getRepos();
      
-}
+};
+
+const getRepos = async function () {
+    const res = await fetch (
+        `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`
+    );
+    const repoData = await res.json();
+    console.log(repoData);
+    showRepos(repoData);
+};
+
+const showRepos = function (repos) {
+    for (const repo of repos) {
+        const repoItem = document.createElement("li");
+        repoItem.classList.add("repo");
+        repoItem.innerHTML = `<h3>${repo.name}</h3>`;
+        repoList.append(repoItem);
+    }  
+};
