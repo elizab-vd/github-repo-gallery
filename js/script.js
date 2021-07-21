@@ -110,6 +110,24 @@ backToRepo.addEventListener("click", function () {
     backToRepo.classList.add("hide");
 });
 
+filterInput.addEventListener("input", function (e) {
+    const searchInput = e.target.value;
+    //console.log(searchInput);
+
+    const repos = document.querySelectorAll(".repo");
+    const lowercaseInput = searchInput.toLowerCase();
+
+    for(const repo of repos){
+        const lowercaseRepo = repo.innerText.toLowerCase();
+        if(lowercaseRepo.includes(lowercaseInput)){
+            repo.classList.remove("hide");
+        } else {
+            repo.classList.add("hide");
+        }
+    }
+
+   
+});
 
 
 
